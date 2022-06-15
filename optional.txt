@@ -1,0 +1,37 @@
+const _id = randomBytes(5).toString("hex")
+Course.push({
+    _id,
+    ...createCourse,
+})
+return Course.find((x) => x._id == _id)
+
+console.log(_id)
+const user = User.filter((x) => x._id !== _id)
+if(user){
+    console.log("user deleted")
+}
+
+optional just trying.........
+createorder ( createOrder : createOrder! ) : OrderItem
+
+input createOrder {
+    userid : ID!
+    orderitem : [createCourse]
+    paymentMethod : String!
+    itemprice : Int!
+    totalPrice : Int!
+    isPaid : Boolean!
+    paidAt : Date
+    isSelled : Boolean!
+    sellAt : Date
+}
+
+createorder : async (_,{createOrder}) => {
+
+    const neworder = new Order ({
+        ...createOrder
+    })
+
+    return await neworder.save()
+
+},

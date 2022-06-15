@@ -1,0 +1,365 @@
+query getAllUser{
+  users{
+    _id
+    name
+    email
+    password
+    isAdmin
+  }
+}
+
+=========================================
+
+query getAllCousre {
+  courses{
+    _id
+    name
+    quantity
+    category
+    img
+    description
+    totalsell
+    rating
+    price
+  }
+}
+
+=========================================
+
+
+query getAllOrders {
+  orderitem{
+    _id
+    userid
+    orderitem{
+        course_id
+        _id
+        name
+        quantity
+        category
+        img
+        description
+        totalsell
+        rating
+        price
+    }
+    paymentMethod
+    itemprice
+    totalPrice
+    isPaid
+    paidAt
+    isSelled
+    sellAt
+  }
+}
+
+==========================================
+
+query getUserById ( $userId : ID! ) {
+  user (_id : $userId){
+    _id
+    name
+    email
+    password
+    isAdmin
+  }
+}
+
+{
+  "userId": "2"
+}
+
+==========================================
+
+query getCourseById ( $courseId : ID! ){
+  course (_id: $courseId){
+    _id
+    name
+    quantity
+    category
+    img
+    description
+    totalsell
+    rating
+    price
+  }
+}
+
+{
+  "courseId": "22"
+}
+
+===========================================
+
+query getOrderById ( $orderId : ID! ){
+  orderitemById (_id : $orderId){
+    _id
+    userid
+    orderitem{
+       _id
+      name
+      quantity
+      category
+      img
+      description
+      totalsell
+      rating
+      price
+    }
+    paymentMethod
+    itemprice
+    totalPrice
+    isPaid
+    paidAt
+    isSelled
+    sellAt
+  }
+}
+
+{
+  "orderId": "1"
+}
+
+============================================
+
+mutation signupuser ( $signupuser : signUpUser! ){
+  signup(signUpUser: $signupuser){
+    _id
+    name
+    email
+    password
+    isAdmin
+  }
+}
+
+{
+  "signupuser": {
+    "name": "new user",
+    "email": "newuser@gmail.com",
+    "password": "1234",
+    "isAdmin": false
+  }
+}
+
+============================================
+
+mutation signinuser ( $signIn : SignInUser! ){
+  signin(SignInUser : $signIn){
+    _id
+    name
+    email
+    password
+    isAdmin
+    token
+  }
+}
+
+{
+  "signIn": {
+    "email": "newuser2@gmail.com",
+    "password": "1234"
+  }
+}
+
+============================================
+
+mutation createCourse ( $createcourse : createCourse! ){
+  createcourse(createCourse : $createcourse){
+    _id
+    name
+    quantity
+    category
+    img
+    description
+    totalsell
+    rating
+    price
+  }
+}
+
+{
+  "createcourse": {
+    "name": "mern stack",
+    "quantity": 1,
+    "category": "web",
+    "img": "https://res.cloudinary.com/image-hosting-api/image/upload/v1653136975/pexels-photo-5632405_cxucw4.jpg",
+    "description": "Complete coverage of HTML, CSS, Javascript while you Earn Four Respected Certifications",
+    "totalsell": 13,
+    "rating": 4.2,
+    "price": 45
+  }
+}
+
+===========================================
+
+mutation order ( $newOrder : createOrder! ){
+  createorder (createOrder : $newOrder){
+    _id
+    userid
+    orderitem {
+      course_id
+       _id
+      name
+      quantity
+      category
+      img
+      description
+      totalsell
+      rating
+      price
+    }
+    paymentMethod
+    itemprice
+    totalPrice
+    isPaid
+    paidAt
+    isSelled
+    sellAt
+  }
+}
+
+{
+  "newOrder": {
+      "userid": "6",
+			"orderitem": [
+         {
+          "name": "mern stack",
+          "quantity": 1,
+          "category": "web",
+          "img": "https://res.cloudinary.com/image-hosting-api/image/upload/v1653136975/pexels-photo-5632405_cxucw4.jpg",
+          "description": "Complete coverage of HTML, CSS, Javascript while you Earn Four Respected Certifications",
+          "totalsell": 13,
+          "rating": 4.2,
+          "price": 45
+        }
+    ],
+    "paymentMethod": "stripe",
+    "itemprice": 89,
+    "totalPrice": 100,
+    "isPaid": false,
+    "isSelled": false
+  }
+}
+
+
+============================================
+
+mutation deleteUser ( $userId : ID! ){
+  deluser(_id : $userId){
+    _id
+    name
+    email
+    password
+    isAdmin
+  }
+}
+
+{
+  "userId": "62a717b57aafcd8819600106"
+}
+
+============================================
+
+mutation deletecourse ( $courseId : ID! ){
+  delcourse (_id : $courseId){
+    _id
+    name
+    quantity
+    category
+    img
+    description
+    totalsell
+    rating
+    price
+  }
+}
+
+{
+  "courseId": "62a4dd847304e5eae794074a"
+}
+
+============================================
+
+mutation deleteOrder ( $orderId : ID! ) {
+  delorder(_id : $orderId){
+    _id
+    userid
+    orderitem{
+        course_id
+        _id
+        name
+        quantity
+        category
+        img
+        description
+        totalsell
+        rating
+        price
+    }
+    paymentMethod
+    itemprice
+    totalPrice
+    isPaid
+    paidAt
+    isSelled
+    sellAt
+  }
+}
+
+{
+  "orderId": "1"
+}
+
+============================================
+
+mutation updateuser ( $updateUser : UpdateUser! ){
+  updateUser (UpdateUser : $updateUser){
+    _id
+    name
+    email
+    password
+    isAdmin
+  }
+}
+
+{
+  "updateUser": {
+    "_id": "62a717b57aafcd8819600106",
+    "name": "Aziz is still",
+    "email": "aziz@admin.com",
+    "password": "1234",
+    "isAdmin": true
+  }
+}
+
+=============================================
+
+mutation updateCourse ( $updateCourse : UpdateCourse! ){
+  updateCourse(UpdateCourse : $updateCourse){
+    _id
+    name
+    quantity
+    category
+    img
+    description
+    totalsell
+    rating
+    price
+  }
+}
+
+{
+  "updateCourse": {
+    "_id": "62a720aade2bcd958fcc99aa",
+    "name": "React",
+    "quantity": 1,
+    "category": "web",
+    "img": "https://res.cloudinary.com/image-hosting-api/image/upload/v1653136975/pexels-photo-5632405_cxucw4.jpg",
+    "description": "Complete coverage of HTML, CSS, Javascript while you Earn Four Respected Certifications",
+    "totalsell": 15,
+    "rating": 4.5,
+    "price": 89
+  }
+}
+
+=============================================
