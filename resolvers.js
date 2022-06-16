@@ -18,55 +18,70 @@ const resolvers = {
         orderitemById : async (_, { _id }) => await Order.findById({_id}) //OrderItem.find((orderById) => orderById._id == _id),
     },
     Mutation : {
-        signup : async (_,{signUpUser}) => {
+        // signup : async (_,{signUpUser}) => {
 
-            const user = await User.findOne ({ email : signUpUser.email })
+        //     const user = await User.findOne ({ email : signUpUser.email })
 
-            console.log({signUpUser})
+        //     console.log({signUpUser})
 
-            if( user ){
-                throw new Error(" This user already exits ")
-            }
+        //     if( user ){
+        //         throw new Error(" This user already exits ")
+        //     }
 
-            const hashPassword = await bcrypt.hash(signUpUser.password, 12)
+        //     const hashPassword = await bcrypt.hash(signUpUser.password, 12)
 
-            const newuser = new User ({
-                _id: signUpUser._id,
-                name: signUpUser.name,
-                email: signUpUser.email,
-                password: hashPassword,
-                isAdmin: signUpUser.isAdmin,
-                token: generateToken(signUpUser)
-            })
+        //     const newuser = new User ({
+        //         _id: signUpUser._id,
+        //         name: signUpUser.name,
+        //         email: signUpUser.email,
+        //         password: hashPassword,
+        //         isAdmin: signUpUser.isAdmin,
+        //         token: generateToken(signUpUser)
+        //     })
 
-            return await newuser.save()
+        //     return await newuser.save()
 
 
-        },
-        signin : async (_,{SignInUser}) => {
+        // },
+        // signin : async (_,{SignInUser}) => {
 
-            const user = await User.findOne({ email: SignInUser.email })
+        //     const user = await User.findOne({ email: SignInUser.email })
 
-            if (!user) {
-                throw new Error(" This email dosen't exits ")
-            }
+        //     if (!user) {
+        //         throw new Error(" This email dosen't exits ")
+        //     }
 
-            const doMatch = await bcrypt.compare(SignInUser.password, user.password)
+        //     const doMatch = await bcrypt.compare(SignInUser.password, user.password)
 
-            if (!doMatch) {
-                throw new Error("email or password invalid")
-            }
+        //     if (!doMatch) {
+        //         throw new Error("email or password invalid")
+        //     }
 
-            return {
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                password: user.password,
-                isAdmin: user.isAdmin,
-                token: generateToken(user)
-            }
+        //     return {
+        //         _id: user._id,
+        //         name: user.name,
+        //         email: user.email,
+        //         password: user.password,
+        //         isAdmin: user.isAdmin,
+        //         token: generateToken(user)
+        //     }
 
-        },
+        // },
+        // updateUser : async (_,{UpdateUser}) => {
+        //     console.log(UpdateUser._id)
+        //     const user = await User.findById ({ _id : UpdateUser._id })
+
+        //     if(user){
+        //         user.name = UpdateUser.name || user.name
+        //         user.email = UpdateUser.email || user.email
+        //         if(UpdateUser.password ){
+        //             user.password = bcrypt.hashSync(UpdateUser.password, 12) || user.password
+        //         }
+
+        //         return await user.save()
+        //     }
+
+        // },
         createcourse : async (_,{createCourse}) => {
 
             const newcourse = new Course ({
@@ -93,21 +108,6 @@ const resolvers = {
             const delOrder = await Order.findById({ _id })
 
             return await delOrder.deleteOne()
-        },
-        updateUser : async (_,{UpdateUser}) => {
-            console.log(UpdateUser._id)
-            const user = await User.findById ({ _id : UpdateUser._id })
-
-            if(user){
-                user.name = UpdateUser.name || user.name
-                user.email = UpdateUser.email || user.email
-                if(UpdateUser.password ){
-                    user.password = bcrypt.hashSync(UpdateUser.password, 12) || user.password
-                }
-
-                return await user.save()
-            }
-
         },
         updateCourse : async (_,{UpdateCourse}) => {
             console.log(UpdateCourse._id)

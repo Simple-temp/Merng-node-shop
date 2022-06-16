@@ -1,17 +1,20 @@
 import { ApolloServer } from "apollo-server-express";
-import { ApolloServerPluginDrainHttpServer, 
-    ApolloServerPluginLandingPageGraphQLPlayground,
-    ApolloServerPluginLandingPageDisabled
-} from "apollo-server-core";
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageDisabled } from "apollo-server-core";
 import mongoose from "mongoose";
 import typeDefs from "./typeDefs.js";
 import dotenv from "dotenv"
 import express from 'express';
 import http from 'http';
+import cors from "cors"
+import bodyParser from "body-parser"
 dotenv.config()
 
 const port = process.env.PORT || 4000
 const app = express();
+app.use(cors())
+app.use(bodyParser.json())
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 const httpServer = http.createServer(app);
 
 mongoose.connect(process.env.DB_URL,{
@@ -32,6 +35,7 @@ import "./Models/courseModels.js";
 import "./Models/orderModels.js";
 import resolvers from "./resolvers.js";
 import seedRouter from "./Routes/sedRoutes.js";
+import userRoutes from "./Routes/userRoutes.js";
 
 const server = new ApolloServer({
     typeDefs,
@@ -55,6 +59,7 @@ app.get("/",(req, res)=>{
 })
 
 app.use("/api/seed", seedRouter)
+app.use("/api/user", userRoutes)
 
 app.use((err, req, res, next)=>{
     res.status(500).send({ message : err.message })
