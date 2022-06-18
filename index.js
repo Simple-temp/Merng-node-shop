@@ -13,6 +13,7 @@ const port = process.env.PORT || 4000
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 const httpServer = http.createServer(app);
@@ -36,6 +37,7 @@ import "./Models/orderModels.js";
 import resolvers from "./resolvers.js";
 import seedRouter from "./Routes/sedRoutes.js";
 import userRoutes from "./Routes/userRoutes.js";
+import courseRoutes from "./Routes/courseRoutes.js";
 
 const server = new ApolloServer({
     typeDefs,
@@ -60,6 +62,7 @@ app.get("/",(req, res)=>{
 
 app.use("/api/seed", seedRouter)
 app.use("/api/user", userRoutes)
+app.use("/api/course", courseRoutes)
 
 app.use((err, req, res, next)=>{
     res.status(500).send({ message : err.message })
