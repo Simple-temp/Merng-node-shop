@@ -5,6 +5,11 @@ const Course = mongoose.model("Course")
 
 const courseRoutes = express.Router()
 
+courseRoutes.get("/", async(req, res)=>{
+    const course = await Course.find({})
+    res.send(course)
+})
+
 courseRoutes.post("/", async (req, res)=>{
 
     console.log(req.body)
@@ -47,6 +52,7 @@ courseRoutes.put("/updatecourse/:id", async (req, res)=>{
         course.category = req.body.category || course.category
         course.img = req.body.img || course.img
         course.description = req.body.description || course.description
+        course.totalsell = req.body.totalsell || course.totalsell
         course.rating = req.body.rating || course.rating
         course.price = req.body.price || course.price
 
