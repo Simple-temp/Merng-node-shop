@@ -18,11 +18,10 @@ const resolvers = {
         orderitemById: async (_, { _id }) => await Order.findById({ _id }) //OrderItem.find((orderById) => orderById._id == _id),
     },
     Mutation: {
-        signup: async (_, { signUpUser }) => {
+//============================================================User rresolver=========================================================//        
+        signup: async (_, { signUpUser }) => {//=====It's a valid code (Not in use) but I use rest api for check with apollo-express=server 
 
             const user = await User.findOne({ email: signUpUser.email })
-
-            console.log({ signUpUser })
 
             if (user) {
                 throw new Error(" This user already exits ")
@@ -43,7 +42,7 @@ const resolvers = {
 
 
         },
-        signin: async (_, { SignInUser }) => {
+        signin: async (_, { SignInUser }) => {//=====It's a valid code (Not in use) but I use rest api for check with apollo-express=server 
 
             const user = await User.findOne({ email: SignInUser.email })
 
@@ -67,8 +66,7 @@ const resolvers = {
             }
 
         },
-        updateUser: async (_, { UpdateUser }) => {
-            console.log(UpdateUser._id)
+        updateUser: async (_, { UpdateUser }) => {//=====It's a valid code (Not in use) but I use rest api for check with apollo-express=server 
             const user = await User.findById({ _id: UpdateUser._id })
 
             if (user) {
@@ -82,9 +80,36 @@ const resolvers = {
             }
 
         },
-        createcourse: async (_, { createCourse }) => {
+        deluser: async (_, { _id }) => {
+            const delUser = await User.findById({ _id })
 
-            console.log(createCourse)
+            return await delUser.deleteOne()
+        },
+        makeadmin : async (_,{Admin}) => {
+            const user = await User.findOne ({ email : Admin.email })
+            if(user){
+                user.isAdmin = true
+            }
+            return await user.save()
+        },
+        deleteadmin : async (_,{Admin}) => {
+            const user = await User.findOne ({ email : Admin.email })
+            if(user){
+                user.isAdmin = false
+            }
+            console.log(user)
+            return await user.save()
+        },
+        admindeletebyid : async (_,{_id}) => {
+            const user = await User.findById ({ _id })
+            if(user){
+                user.isAdmin = false
+            }
+            console.log(user)
+            return await user.save()
+        },
+//============================================================Course rresolver=========================================================//
+        createcourse: async (_, { createCourse }) => {//=====It's a valid code (Not in use) but I use rest api for check with apollo-express=server 
 
                 const newcourse = new Course({
                     ...createCourse
@@ -95,27 +120,13 @@ const resolvers = {
                 return await newcourse.save()
 
         },
-        deluser: async (_, { _id }) => {
-            console.log(_id)
-            const delUser = await User.findById({ _id })
-
-            return await delUser.deleteOne()
-        },
         delcourse: async (_, { _id }) => {
-            console.log(_id)
+
             const delCourse = await Course.findById({ _id })
 
             return await delCourse.deleteOne()
         },
-        delorder: async (_, { _id }) => {
-            console.log(_id)
-            const delOrder = await Order.findById({ _id })
-
-            return await delOrder.deleteOne()
-        },
-        updateCourse: async (_, { UpdateCourse }) => {
-
-            console.log(UpdateCourse._id)
+        updateCourse: async (_, { UpdateCourse }) => {//=====It's a valid code (Not in use) but I use rest api for check with apollo-express=server 
 
             const course = await Course.findById({ _id: UpdateCourse._id })
 
@@ -133,12 +144,19 @@ const resolvers = {
             }
 
         },
-        UpdateOrderIsPaid: (_, { UpdateOrderIsPaid }) => {
+//============================================================Order rresolver=========================================================//
+        delorder: async (_, { _id }) => {
+            const delOrder = await Order.findById({ _id })
+
+            return await delOrder.deleteOne()
+        },
+        UpdateOrderIsPaid: async (_, { UpdateOrderIsPaid }) => {
 
         },
-        UpdateOrderIsSelled: (_, { UpdateOrderIsSelled }) => {
+        UpdateOrderIsSelled: async (_, { UpdateOrderIsSelled }) => {
 
         },
+
     }
 }
 

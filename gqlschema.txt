@@ -363,3 +363,41 @@ mutation updateCourse ( $updateCourse : UpdateCourse! ){
 }
 
 =============================================
+
+mutation makeAdmin ( $UserId : Admin! ){
+  makeadmin  (Admin : $UserId) {
+    email
+  }
+}
+
+{
+  "UserId": {
+    "email": "ridoykhankst321@gmail.com"
+  }
+}
+
+=============================================
+
+mutation deleteadmin ( $deleteId : deleteAdmin! ){
+  deleteadmin(Admin : $deleteId){
+    email
+  }
+}
+
+{
+  "deleteId": {
+    "email": "kayes@k.com"
+  }
+}
+
+============================================
+
+
+
+
+
+
+
+
+
+

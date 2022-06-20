@@ -64,11 +64,22 @@ type SignUp {
     token : String!
 }
 
+type MakeAdmin {
+    email : String!
+}
+
+type DeleteAdmin {
+    email : String!
+}
+
 type Mutation {
     signup ( signUpUser : signUpUser! ) : SignUp
     deluser ( _id : ID! ) : User
     updateUser ( UpdateUser : UpdateUser! ) : User
     signin ( SignInUser : SignInUser! ) : SignIn
+    makeadmin ( Admin : makeAdmin! ) : MakeAdmin
+    deleteadmin ( Admin : deleteAdmin! ) : DeleteAdmin
+    admindeletebyid ( _id : ID! ) : User
     createcourse ( createCourse : createCourse! ) : Course
     delcourse ( _id : ID! ) : Course
     updateCourse ( UpdateCourse : UpdateCourse! ) : Course
@@ -94,6 +105,14 @@ input UpdateUser {
     email : String!
     password : String!
     isAdmin : Boolean!
+}
+
+input makeAdmin {
+    email : String!
+}
+
+input deleteAdmin {
+    email : String!
 }
 
 input createCourse {
