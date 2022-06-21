@@ -38,6 +38,7 @@ import resolvers from "./resolvers.js";
 import seedRouter from "./Routes/sedRoutes.js";
 import userRoutes from "./Routes/userRoutes.js";
 import courseRoutes from "./Routes/courseRoutes.js";
+import orderRoutes from "./Routes/orderRoutes.js";
 
 const server = new ApolloServer({
     typeDefs,
@@ -63,6 +64,7 @@ app.get("/",(req, res)=>{
 app.use("/api/seed", seedRouter)
 app.use("/api/user", userRoutes)
 app.use("/api/course", courseRoutes)
+app.use("/api/order", orderRoutes)
 
 app.use((err, req, res, next)=>{
     res.status(500).send({ message : err.message })

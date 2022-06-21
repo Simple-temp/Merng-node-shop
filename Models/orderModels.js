@@ -35,3 +35,4 @@ const OrderSchema = (
 )
 
 mongoose.model("Order", OrderSchema)
+// orderitem paymentMethod itemprice totalPrice
