@@ -2,31 +2,34 @@ import express from "express";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
 import { generateToken, isAuth } from "../Utils.js";
+import expressAsyncHandler from "express-async-handler";
 
 const User = mongoose.model("User")
 
 const userRoutes = express.Router()
 
-userRoutes.post("/signup", async (req, res) => {
+userRoutes.post("/signup", expressAsyncHandler(async (req, res) => {
+   
+       const { formData } = req.body
+   
+       const newuser = new User({
+           name: formData.name,
+           email: formData.email,
+           password: bcrypt.hashSync(formData.password),
+       })
+       console.log(newuser)
+       const user = await newuser.save()
+   
+       res.send({
+           _id: user._id,
+           name: user.name,
+           email: user.email,
+           isAdmin: user.isAdmin,
+           token: generateToken(user)
+       })
+   }
 
-    const { formData } = req.body
-
-    const newuser = new User({
-        name: formData.name,
-        email: formData.email,
-        password: bcrypt.hashSync(formData.password),
-    })
-    console.log(newuser)
-    const user = await newuser.save()
-
-    res.send({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user)
-    })
-})
+))
 
 userRoutes.post("/signin", async(req, res) =>{
 
