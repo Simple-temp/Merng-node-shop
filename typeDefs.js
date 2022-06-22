@@ -39,7 +39,7 @@ type OrderItem {
     orderitem : [Course]
     paymentMethod : String!
     itemprice : Int!
-    totalPrice : Int!
+    totalPrice : Float!
     isPaid : Boolean!
     paidAt : Date
     isSelled : Boolean!

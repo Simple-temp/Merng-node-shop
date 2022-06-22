@@ -15,6 +15,8 @@ orderRoutes.post("/", isAuth ,async(req, res)=>{
         paymentMethod: req.body.paymentMethod,
         itemprice: req.body.itemprice,
         totalPrice: req.body.totalPrice,
+        paidAt : new Date(),
+        sellAt : new Date(),
     })
     console.log(newOrder)
     const order = await newOrder.save()
@@ -28,6 +30,20 @@ orderRoutes.get("/author", isAuth, async(req, res)=>{
     console.log(req.user._id)
 
     const orders = await Order.find({ userid: req.user._id })
+    if(orders){
+        res.send(orders)
+    }else{
+        res.status(404).send({ message : "orders not found" })
+    }
+
+})
+
+orderRoutes.get("/:id", isAuth, async(req, res)=>{
+
+    console.log(req.params.id)
+
+    const orders = await Order.findById ({ _id: req.params.id })
+    
     if(orders){
         res.send(orders)
     }else{

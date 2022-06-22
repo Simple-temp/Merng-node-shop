@@ -285,7 +285,6 @@ mutation deleteOrder ( $orderId : ID! ) {
     _id
     userid
     orderitem{
-        course_id
         _id
         name
         quantity
@@ -295,6 +294,7 @@ mutation deleteOrder ( $orderId : ID! ) {
         totalsell
         rating
         price
+        course_id
     }
     paymentMethod
     itemprice
