@@ -84,8 +84,8 @@ type Mutation {
     delcourse ( _id : ID! ) : Course
     updateCourse ( UpdateCourse : UpdateCourse! ) : Course
     delorder ( _id : ID! ) : OrderItem
-    UpdateOrderIsPaid ( UpdateOrderIsPaid : UpdateOrderIsPaid! ) : OrderItem
-    UpdateOrderIsSelled ( UpdateOrderIsSelled : UpdateOrderIsSelled! ) : OrderItem
+    UpdateOrderIsPaid ( _id : ID! ) : OrderItem
+    UpdateOrderIsSelled ( _id : ID! ) : OrderItem
 }
 
 input signUpUser {
@@ -140,14 +140,10 @@ input UpdateCourse {
 
 input UpdateOrderIsPaid {
     _id : ID!
-    isPaid : Boolean!
-    paidAt : Date
 }
 
 input UpdateOrderIsSelled {
     _id : ID!
-    isSelled : Boolean!
-    sellAt : Date
 }
 
 `

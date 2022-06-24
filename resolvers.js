@@ -153,8 +153,13 @@ const resolvers = {
         UpdateOrderIsPaid: async (_, { UpdateOrderIsPaid }) => {
 
         },
-        UpdateOrderIsSelled: async (_, { UpdateOrderIsSelled }) => {
-
+        UpdateOrderIsSelled: async (_, { _id }) => {
+            const order = await Order.findById({ _id })
+            if(order){
+                order.isSelled = true
+                order.sellAt = new Date()
+            }
+            return await order.save()
         },
 
     }
